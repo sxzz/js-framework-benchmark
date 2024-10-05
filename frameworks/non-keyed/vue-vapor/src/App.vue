@@ -1,9 +1,8 @@
 <script setup vapor>
-import { ref, shallowRef, triggerRef } from "vue";
-import { createSelector } from "vue/vapor";
+import { shallowRef, triggerRef, createSelector } from "vue/vapor";
 import { buildData } from "./data";
 
-const selected = ref();
+const selected = shallowRef();
 const rows = shallowRef([]);
 
 function add() {
@@ -95,12 +94,7 @@ const isSelected = createSelector(selected);
   </div>
   <table class="table table-hover table-striped test-data">
     <tbody>
-      <tr
-        v-for="row of rows"
-        :class="{ danger: isSelected(row.id) }"
-        :data-label="row.label.value"
-        v-memo="[row.label.value, row.id === selected]"
-      >
+      <tr v-for="row of rows" :class="{ danger: isSelected(row.id) }">
         <td class="col-md-1">{{ row.id }}</td>
         <td class="col-md-4">
           <a @click="select(row.id)">{{ row.label.value }}</a>
